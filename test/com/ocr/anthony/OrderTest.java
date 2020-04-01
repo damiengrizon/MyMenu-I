@@ -26,6 +26,7 @@ public class OrderTest {
 
     Order order = new Order();
 
+
     @Test
     public void Given_Nothing_When_DisplayMenuSelection_Then_ShouldDisplayText() {
         order.displayAvailableMenu();
