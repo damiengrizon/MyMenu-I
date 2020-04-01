@@ -3,6 +3,7 @@ package com.ocr.anthony;
 import com.sun.source.doctree.SystemPropertyTree;
 
 import java.net.StandardSocketOptions;
+import java.util.Scanner;
 
 public class Order {
     /**
@@ -38,5 +39,12 @@ public class Order {
                 System.out.println("Vous n'avez pas choisi de menu parmi les choix proposés");
                 break;
         }
+    }
+    public void runMenu() {
+        this.displayAvailableMenu();
+        Scanner sc = new Scanner(System.in);
+        int nb = sc.nextInt();
+        this.displaySelectedMenu(nb);
+
     }
 }
