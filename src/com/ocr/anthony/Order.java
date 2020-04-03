@@ -2,6 +2,7 @@ package com.ocr.anthony;
 
 import com.sun.source.doctree.SystemPropertyTree;
 
+import javax.swing.*;
 import java.net.StandardSocketOptions;
 import java.util.Scanner;
 
@@ -40,11 +41,59 @@ public class Order {
                 break;
         }
     }
+
+    /**
+     *run asking process for a menu
+     */
     public void runMenu() {
         this.displayAvailableMenu();
         Scanner sc = new Scanner(System.in);
         int nb = sc.nextInt();
         this.displaySelectedMenu(nb);
+
+    }
+
+    /**
+     * Display  a selected depending on all sides enable or not
+     * All sides  = vegetables, fries and rice
+     * Not all sides = rice or not
+     * @param nbMenu the selected menu
+     * @param allSidesEnable enable display for all sides or not
+     */
+
+    public void displaySelectedSide(int nbMenu, boolean allSidesEnable) {
+        if(allSidesEnable){
+            switch (nbMenu){
+                case 1:
+                    System.out.println("Vous avez choisi comme accompagnement : légumes frais");
+                    break;
+                case 2:
+                    System.out.println("Vous avez choisi comme accompagnement : frites");
+                    break;
+                case 3:
+                    System.out.println("Vous avez choisi comme accompagnement : riz");
+                    break;
+                default:
+            System.out.println("Vous n'avez pas choisi d'accompagnement parmi les choix proposés");
+                    break;
+            }
+
+            }else{
+            switch (nbMenu){
+                case 1:
+                    System.out.println("Vous avez choisi comme accompagnement : riz");
+                    break;
+                case 2:
+                    System.out.println("Vous avez choisi comme accompagnement : pas de riz");
+                    break;
+                default:
+                    System.out.println("Vous n'avez pas choisi d'accompagnement parmi les choix proposés");
+                    break;
+
+            }
+
+
+        }
 
     }
 }
