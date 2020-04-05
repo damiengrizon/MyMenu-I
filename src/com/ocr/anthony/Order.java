@@ -7,10 +7,12 @@ import java.net.StandardSocketOptions;
 import java.util.Scanner;
 
 public class Order {
+    Scanner sc = new Scanner(System.in);
+
+
     /**
      * Display all available menus in the restaurant.
      */
-
     public void displayAvailableMenu() {
         System.out.println("Choix menu");
         System.out.println("1 - poulet");
@@ -43,11 +45,24 @@ public class Order {
     }
 
     /**
+     * run asking process for choose the number of menu
+     * run asking process for severals menus
+     */
+    public void runMenus(){
+        System.out.println("Choisissez le nombre de menu que vous souhaitez :");
+        int menuQuantity = sc.nextInt();
+        int counter = 0;
+        while(menuQuantity>counter){
+            runMenu();
+            counter++;
+        }
+    }
+
+    /**
      *run asking process for a menu
      */
     public void runMenu() {
         this.displayAvailableMenu();
-        Scanner sc = new Scanner(System.in);
         int nbMenu = sc.nextInt();
         this.displaySelectedMenu(nbMenu);
         switch (nbMenu) {
