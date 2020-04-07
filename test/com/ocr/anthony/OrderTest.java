@@ -180,5 +180,39 @@ public class OrderTest {
         assertEquals("Vous n'avez pas choisi de menu parmi les choix proposés", output[5]);
         assertEquals("Vous avez choisi comme menu : poulet", output[6]);
     }
+    @Test
+    public void Given_ChikenWithBadSideAndBadDrink_When_MenuIsRun_Then_ReAskSideAndDrink() {
+        System.setIn(new ByteArrayInputStream("1\n4\n2\n-1\n3\n".getBytes()));
+        order = new Order();
+        order.runMenu();
+        String[] output = outContent.toString().replace("\r\n", "\n").split("\n");
+        assertEquals("Vous avez choisi comme menu : poulet", output[5]);
+        assertEquals("Vous n'avez pas choisi d'accompagnement parmi les choix proposés", output[11]);
+        assertEquals("Vous avez choisi comme accompagnement : frites", output[12]);
+        assertEquals("Vous n'avez pas choisi de boisson parmi les choix proposés", output[18]);
+        assertEquals("Vous avez choisi comme boisson : soda", output[19]);
+    }
+    @Test
+    public void Given_BeefWithBadSide_When_MenuIsRun_Then_ReAskSideAndDrink() {
+        System.setIn(new ByteArrayInputStream("2\n4\n2\n".getBytes()));
+        order = new Order();
+        order.runMenu();
+        String[] output = outContent.toString().replace("\r\n", "\n").split("\n");
+        assertEquals("Vous avez choisi comme menu : boeuf", output[5]);
+        assertEquals("Vous n'avez pas choisi d'accompagnement parmi les choix proposés", output[11]);
+        assertEquals("Vous avez choisi comme accompagnement : frites", output[12]);
+    }
+    @Test
+    public void Given_VegetarianWithBadSideAndBadDrink_When_MenuIsRun_Then_ReAskSideAndDrink() {
+        System.setIn(new ByteArrayInputStream("3\n3\n2\n-1\n3\n".getBytes()));
+        order = new Order();
+        order.runMenu();
+        String[] output = outContent.toString().replace("\r\n", "\n").split("\n");
+        assertEquals("Vous avez choisi comme menu : végétarien", output[5]);
+        assertEquals("Vous n'avez pas choisi d'accompagnement parmi les choix proposés", output[10]);
+        assertEquals("Vous avez choisi comme accompagnement : pas de riz", output[11]);
+        assertEquals("Vous n'avez pas choisi de boisson parmi les choix proposés", output[17]);
+        assertEquals("Vous avez choisi comme boisson : soda", output[18]);
+    }
     
 }
