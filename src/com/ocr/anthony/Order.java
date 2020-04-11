@@ -67,37 +67,15 @@ public class Order {
             this.displaySelectedMenu(nbMenu);
             switch (nbMenu) {
                 case 1:
-                    displayAvailableSide(true);
-                    int nbSide;
-                    do {
-                        nbSide = sc.nextInt();
-                        displaySelectedSide(nbSide, true);
-                    }while (nbSide<1 || nbSide>3);
-                    displayAvailableDrink();
-                    int nbDrink;
-                    do {
-                        nbDrink = sc.nextInt();
-                        displaySelectedDrink(nbDrink);
-                    }while (nbDrink<1 || nbDrink>3);
+                    askSide(true);
+                    askDrink();
                     break;
                 case 2:
-                    displayAvailableSide(true);
-                    do {
-                        nbSide = sc.nextInt();
-                        displaySelectedSide(nbSide, true);
-                    }while(nbSide<1 || nbSide>3);
+                    askSide(true);
                     break;
                 case 3:
-                    displayAvailableSide(false);
-                    do {
-                        nbSide = sc.nextInt();
-                        displaySelectedSide(nbSide, false);
-                    }while(nbSide<1 || nbSide>2);
-                    displayAvailableDrink();
-                    do {
-                        nbDrink = sc.nextInt();
-                        displaySelectedDrink(nbDrink);
-                    }while (nbDrink<1 || nbDrink>3);
+                    askSide(false);
+                    askDrink();
                     break;
             }
         } while(nbMenu<1 ||nbMenu>3);
@@ -193,4 +171,65 @@ public class Order {
         System.out.println("Que souhaitez-vous comme boisson ?");
     }
 
+    /**
+     * Display a question about category in the standard input, get response and display it
+     * @param category  the category of the question
+     * @param responses available responses
+     */
+    public void askSomething(String category, String[] responses) {
+        System.out.println(("choix") + category);
+        for (int i = 1; i <= responses.length; i++){
+            System.out.println( i + "-" + responses[i -1]);
+        }
+        System.out.println("Que souhaitez vous comme " + category + "?");
+        int nbResponse;
+        boolean responseIsGood;
+        do {
+            nbResponse = sc.nextInt();
+            responseIsGood = (nbResponse >= 1  && nbResponse<= responses.length);
+        if (responseIsGood){
+            System.out.println("Vous avez choisi comme " + category + " : " + responses[nbResponse - 1]);
+        } else {
+            boolean isVowel = "aeiouy".contains(Character.toString(category.charAt(0)));
+            if (isVowel){
+                System.out.println("Vous n'avez pas choisi d'" + category + " parmi les choix proposés");
+            } else {
+                System.out.println("Vous n'avez pas choisi de " + category + " parmi les choix proposés");
+            }
+
+            }
+
+        } while (responseIsGood == false);
+
+    }
+
+    /**
+     * Display a question about the menu in the standard input, get response and display it
+     */
+    public void askMenu() {
+        String [] menus = {"poulet", "boeuf" ,"vegetarien"};
+        askSomething("menu", menus);
+    }
+
+    /**
+     * Display a question about the side in the standart input, get response and display it
+     * @param allSidesEnable
+     */
+    public void askSide(boolean allSidesEnable) {
+        if (allSidesEnable){
+            String [] responsAllSides = {"légumes frais","frites","riz"};
+            askSomething("accompagnement", responsAllSides);
+        }else{
+            String [] responseOnlyRice = {"riz","pas de riz"};
+            askSomething("accompagnement", responseOnlyRice);
+        }
+    }
+
+    /**
+     * Display a question about the drink in the standart input, get response and display it
+     */
+    public void askDrink() {
+        String[] responseDrink = {"eau plate","eau gazeuse","soda"};
+        askSomething("boisson", responseDrink);
+    }
 }
