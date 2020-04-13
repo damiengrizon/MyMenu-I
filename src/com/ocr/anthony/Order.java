@@ -3,6 +3,7 @@ package com.ocr.anthony;
 import java.util.Scanner;
 
 public class Order {
+    String orderSummary = "";
     Scanner sc = new Scanner(System.in);
 
 
@@ -47,9 +48,12 @@ public class Order {
     public void runMenus(){
         System.out.println("Choisissez le nombre de menu que vous souhaitez :");
         int menuQuantity = sc.nextInt();
+        orderSummary = "Résumé de votre commande :%n";
         for (int i = 0; i < menuQuantity; i++){
+            orderSummary += "Menu "+(i+1)+":%n";
             this.runMenu();
         }
+        System.out.println(String.format(orderSummary));
     }
 
     /**
@@ -172,6 +176,7 @@ public class Order {
         System.out.println(("choix") + category);
         for (int i = 1; i <= responses.length; i++){
             System.out.println( i + "-" + responses[i -1]);
+
         }
         System.out.println("Que souhaitez vous comme " + category + "?");
         int nbResponse;
@@ -181,6 +186,7 @@ public class Order {
             responseIsGood = (nbResponse >= 1  && nbResponse<= responses.length);
         if (responseIsGood){
             System.out.println("Vous avez choisi comme " + category + " : " + responses[nbResponse - 1]);
+            orderSummary += "Vous avez choisi comme " + category +" : "+responses[nbResponse - 1]+"%n";
         } else {
             boolean isVowel = "aeiouy".contains(Character.toString(category.charAt(0)));
             if (isVowel){
