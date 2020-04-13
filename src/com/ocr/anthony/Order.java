@@ -56,25 +56,20 @@ public class Order {
      *run asking process for a menu
      */
     public void runMenu() {
-        this.displayAvailableMenu();
-        int nbMenu;
-        do {
-            nbMenu = sc.nextInt();
-            this.displaySelectedMenu(nbMenu);
-            switch (nbMenu) {
-                case 1:
-                    askSide(true);
-                    askDrink();
-                    break;
-                case 2:
-                    askSide(true);
-                    break;
-                case 3:
-                    askSide(false);
-                    askDrink();
-                    break;
-            }
-        } while(nbMenu<1 ||nbMenu>3);
+         int nbMenu = askMenu();
+         switch (nbMenu) {
+            case 1:
+                askSide(true);
+                askDrink();
+                break;
+            case 2:
+                askSide(true);
+                break;
+            case 3:
+                askSide(false);
+                askDrink();
+                break;
+         }
     }
 
     /**
@@ -206,7 +201,7 @@ public class Order {
      * @return the number of the selected choice
      */
     public int askMenu() {
-        String [] menus = {"poulet", "boeuf" ,"vegetarien"};
+        String [] menus = {"poulet", "boeuf" ,"végétarien"};
         return askSomething("menu", menus);
 
     }
