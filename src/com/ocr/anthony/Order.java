@@ -1,9 +1,5 @@
 package com.ocr.anthony;
 
-import com.sun.source.doctree.SystemPropertyTree;
-
-import javax.swing.*;
-import java.net.StandardSocketOptions;
 import java.util.Scanner;
 
 public class Order {
@@ -175,8 +171,9 @@ public class Order {
      * Display a question about category in the standard input, get response and display it
      * @param category  the category of the question
      * @param responses available responses
+     * @return the number of the selected choice
      */
-    public void askSomething(String category, String[] responses) {
+    public int askSomething(String category, String[] responses) {
         System.out.println(("choix") + category);
         for (int i = 1; i <= responses.length; i++){
             System.out.println( i + "-" + responses[i -1]);
@@ -193,27 +190,30 @@ public class Order {
             boolean isVowel = "aeiouy".contains(Character.toString(category.charAt(0)));
             if (isVowel){
                 System.out.println("Vous n'avez pas choisi d'" + category + " parmi les choix proposés");
-            } else {
-                System.out.println("Vous n'avez pas choisi de " + category + " parmi les choix proposés");
-            }
+                } else {
+                    System.out.println("Vous n'avez pas choisi de " + category + " parmi les choix proposés");
+                }
 
             }
 
-        } while (responseIsGood == false);
+        } while (!responseIsGood);
 
+        return nbResponse;
     }
 
     /**
      * Display a question about the menu in the standard input, get response and display it
+     * @return the number of the selected choice
      */
-    public void askMenu() {
+    public int askMenu() {
         String [] menus = {"poulet", "boeuf" ,"vegetarien"};
-        askSomething("menu", menus);
+        return askSomething("menu", menus);
+
     }
 
     /**
-     * Display a question about the side in the standart input, get response and display it
-     * @param allSidesEnable
+     * Display a question about the side in the standard input, get response and display it
+     * @param allSidesEnable display or not the full sides
      */
     public void askSide(boolean allSidesEnable) {
         if (allSidesEnable){
