@@ -1,5 +1,6 @@
 package com.ocr.anthony;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Order {
@@ -47,12 +48,23 @@ public class Order {
      */
     public void runMenus(){
         System.out.println("Choisissez le nombre de menu que vous souhaitez :");
-        int menuQuantity = sc.nextInt();
+        int menuQuantity = -1;
+        boolean responseIsGood;
+        do {
+            try {
+                menuQuantity = sc.nextInt();
+                responseIsGood = true;
+            }catch (InputMismatchException e){
+                sc.next();
+                System.out.println("Vous devez saisir un nombre, correspondant au nombre de menus souhaités");
+                responseIsGood = false;
+            }
+        } while (!responseIsGood);
         orderSummary = "Résumé de votre commande :%n";
         for (int i = 0; i < menuQuantity; i++){
             orderSummary += "Menu "+(i+1)+":%n";
             this.runMenu();
-        }
+            }
         System.out.println(String.format(orderSummary));
     }
 
@@ -179,11 +191,17 @@ public class Order {
 
         }
         System.out.println("Que souhaitez vous comme " + category + "?");
-        int nbResponse;
+        int nbResponse =0;
         boolean responseIsGood;
         do {
-            nbResponse = sc.nextInt();
-            responseIsGood = (nbResponse >= 1  && nbResponse<= responses.length);
+            try {
+                nbResponse = sc.nextInt();
+                responseIsGood = (nbResponse >= 1  && nbResponse<= responses.length);
+            } catch (InputMismatchException e) {
+                sc.next();
+                responseIsGood = false;
+            }
+
         if (responseIsGood){
             System.out.println("Vous avez choisi comme " + category + " : " + responses[nbResponse - 1]);
             orderSummary += "Vous avez choisi comme " + category +" : "+responses[nbResponse - 1]+"%n";
