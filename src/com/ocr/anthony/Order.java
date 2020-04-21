@@ -1,7 +1,13 @@
 package com.ocr.anthony;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import static java.nio.file.StandardOpenOption.APPEND;
 
 public class Order {
     String orderSummary = "";
@@ -47,6 +53,7 @@ public class Order {
      * run asking process for severals menus
      */
     public void runMenus(){
+        Path orderPath = Paths.get("order.csv");
         System.out.println("Choisissez le nombre de menu que vous souhaitez :");
         int menuQuantity = -1;
         boolean responseIsGood;
@@ -63,6 +70,13 @@ public class Order {
         orderSummary = "Résumé de votre commande :%n";
         for (int i = 0; i < menuQuantity; i++){
             orderSummary += "Menu "+(i+1)+":%n";
+            String orderLine = runMenu();
+            try {
+                Files.write(orderPath,String.format(orderLine).getBytes(), APPEND);
+            } catch (IOException e) {
+                System.out.println("oops une erreur est survenue. Merci de réessayer plus tard");
+                return;
+            }
             this.runMenu();
             }
         System.out.println(String.format(orderSummary));
@@ -71,21 +85,24 @@ public class Order {
     /**
      *run asking process for a menu
      */
-    public void runMenu() {
+    public String runMenu() {
          int nbMenu = askMenu();
+         int nbSide = -1;
+         int nbDrink = -1;
          switch (nbMenu) {
             case 1:
-                askSide(true);
-                askDrink();
+                nbSide = askSide(true);
+                nbDrink = askDrink();
                 break;
             case 2:
-                askSide(true);
+                nbSide = askSide(true);
                 break;
             case 3:
-                askSide(false);
-                askDrink();
+                nbSide = askSide(false);
+                nbDrink = askDrink();
                 break;
          }
+         return nbMenu + "," + nbSide + "," + nbDrink + "%n";
     }
 
     /**
@@ -234,21 +251,21 @@ public class Order {
      * Display a question about the side in the standard input, get response and display it
      * @param allSidesEnable display or not the full sides
      */
-    public void askSide(boolean allSidesEnable) {
+    public int askSide(boolean allSidesEnable) {
         if (allSidesEnable){
             String [] responsAllSides = {"légumes frais","frites","riz"};
-            askSomething("accompagnement", responsAllSides);
+            return askSomething("accompagnement", responsAllSides);
         }else{
             String [] responseOnlyRice = {"riz","pas de riz"};
-            askSomething("accompagnement", responseOnlyRice);
+            return askSomething("accompagnement", responseOnlyRice);
         }
     }
 
     /**
      * Display a question about the drink in the standart input, get response and display it
      */
-    public void askDrink() {
+    public int askDrink() {
         String[] responseDrink = {"eau plate","eau gazeuse","soda"};
-        askSomething("boisson", responseDrink);
+        return askSomething("boisson", responseDrink);
     }
 }
